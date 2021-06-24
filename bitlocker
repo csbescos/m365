@@ -1,0 +1,25 @@
+(Get-BitLockerVolume -MountPoint C) | Format-List
+ComputerName         : DESKTOP-XXXXXXX
+MountPoint           : C:
+EncryptionMethod     : XtsAes128
+AutoUnlockEnabled    : 
+AutoUnlockKeyStored  : False
+MetadataVersion      : 2
+VolumeStatus         : FullyEncrypted
+ProtectionStatus     : On
+LockStatus           : Unlocked
+EncryptionPercentage : 100
+WipePercentage       : 0
+VolumeType           : OperatingSystem
+CapacityGB           : 218,2344
+KeyProtector         : {RecoveryPassword, Tpm}
+
+
+$bitlocker = Get-BitLockerVolume -MountPoint C
+if ($bitlocker.EncryptionMethod -eq "XTSAES256"){
+
+}
+else {
+    disable-bitlocker -MountPoint C
+    enable-bitlocker -MountPoint C -EncryptionMethod "XTSAES256"
+}
