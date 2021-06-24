@@ -17,9 +17,12 @@ KeyProtector         : {RecoveryPassword, Tpm}
 
 $bitlocker = Get-BitLockerVolume -MountPoint C
 if ($bitlocker.EncryptionMethod -eq "XTSAES256"){
-
+$true
 }
 else {
-    disable-bitlocker -MountPoint C
-    enable-bitlocker -MountPoint C -EncryptionMethod "XTSAES256"
+throw "Error"
 }
+
+
+    disable-bitlocker -MountPoint C
+    Enable-BitLocker -MountPoint "C:" -EncryptionMethod Aes256 -UsedSpaceOnly -Pin $SecureString -TPMandPinProtector
